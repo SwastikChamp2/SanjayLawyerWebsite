@@ -243,6 +243,20 @@
     z-index: 1;
   }
 
+  /* ──────────────────────────────────────────────────────────────
+     Replace ALL existing `.prose-body ...` rules in index.css
+     (inside @layer components) with this block.
+     ────────────────────────────────────────────────────────────── */
+
+  .prose-body> :first-child {
+    margin-top: 0;
+  }
+
+  .prose-body [id] {
+    scroll-margin-top: 96px;
+  }
+
+  /* Headings */
   .prose-body h2 {
     @apply text-[30px] mt-[46px] mb-3.5;
   }
@@ -251,10 +265,67 @@
     @apply text-[26px] mt-[34px] mb-2.5;
   }
 
+  .prose-body h4 {
+    @apply font-serif text-[21px] font-semibold leading-[1.25] text-navy mt-7 mb-2;
+  }
+
+  /* Paragraphs and inline text */
   .prose-body p {
     @apply mb-[22px] text-lg text-[#2b3a42];
   }
 
+  .prose-body .lead {
+    @apply font-serif text-[26px] leading-[1.4] text-navy mb-[30px];
+  }
+
+  .prose-body strong {
+    @apply font-semibold text-ink;
+  }
+
+  .prose-body em {
+    @apply italic;
+  }
+
+  .prose-body u {
+    text-decoration-color: var(--color-gold);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+  }
+
+  .prose-body mark {
+    background: #f1e2bd;
+    color: inherit;
+    padding: 0 .25em;
+  }
+
+  .prose-body small {
+    @apply text-[.85em] text-muted;
+  }
+
+  .prose-body abbr[title] {
+    text-decoration: underline dotted var(--color-gold);
+    text-underline-offset: 3px;
+    cursor: help;
+  }
+
+  .prose-body sup {
+    font-size: .7em;
+    line-height: 0;
+  }
+
+  .prose-body sup a {
+    @apply font-semibold text-gold no-underline;
+  }
+
+  .prose-body a {
+    @apply text-navy underline decoration-gold underline-offset-[3px] transition-colors duration-300;
+  }
+
+  .prose-body a:hover {
+    @apply text-gold;
+  }
+
+  /* Lists */
   .prose-body ul {
     @apply mb-[22px] ml-[22px] list-disc;
   }
@@ -267,13 +338,218 @@
     @apply mb-2.5 text-lg text-[#2b3a42];
   }
 
-  .prose-body a {
-    @apply text-navy underline decoration-gold underline-offset-[3px];
+  .prose-body li::marker {
+    color: var(--color-gold);
   }
 
+  .prose-body ol>li::marker {
+    font-weight: 600;
+  }
+
+  .prose-body li>ul,
+  .prose-body li>ol {
+    @apply mt-2.5 mb-0;
+  }
+
+  .prose-body li>ul {
+    list-style-type: circle;
+  }
+
+  .prose-body li>p {
+    @apply mb-2.5;
+  }
+
+  /* Definition list */
+  .prose-body dl {
+    @apply my-8 border-t border-line;
+  }
+
+  .prose-body dt {
+    @apply pt-4 font-serif text-[21px] font-semibold text-navy;
+  }
+
+  .prose-body dd {
+    @apply ml-0 border-b border-line pb-4 pt-1 text-[17px] text-[#2b3a42];
+  }
+
+  /* Divider */
+  .prose-body hr {
+    @apply my-12 h-px border-0 bg-line;
+  }
+
+  /* Blockquote / pull quote */
   .prose-body blockquote {
     @apply border-l-[3px] border-gold py-1.5 pl-6 my-[34px] font-serif text-[26px] leading-[1.4] text-navy italic;
   }
+
+  .prose-body blockquote p {
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+    margin-bottom: 0;
+  }
+
+  .prose-body blockquote cite {
+    @apply mt-3 block font-sans text-[13px] not-italic uppercase tracking-[.14em] text-gold;
+  }
+
+  /* Callouts: <div class="callout [callout-note | callout-warn]"> */
+  .prose-body .callout {
+    @apply my-9 border border-l-[3px] border-line border-l-gold bg-cream px-6 py-5;
+  }
+
+  .prose-body .callout> :last-child {
+    margin-bottom: 0;
+  }
+
+  .prose-body .callout p,
+  .prose-body .callout li {
+    @apply text-[16px];
+  }
+
+  .prose-body .callout .callout-title {
+    @apply mb-2 text-[12.5px] font-semibold uppercase tracking-[.16em] text-gold;
+  }
+
+  .prose-body .callout-note {
+    @apply border-l-navy bg-white;
+  }
+
+  .prose-body .callout-note .callout-title {
+    @apply text-navy;
+  }
+
+  .prose-body .callout-warn {
+    border-left-color: #a4453a;
+    background: #faf0ed;
+  }
+
+  .prose-body .callout-warn .callout-title {
+    color: #a4453a;
+  }
+
+  /* Tables: wrap in <div class="table-wrap"> */
+  .prose-body .table-wrap {
+    @apply my-9 overflow-x-auto border border-line bg-white;
+  }
+
+  .prose-body table {
+    @apply w-full min-w-[560px] border-collapse text-left text-[15.5px];
+  }
+
+  .prose-body caption {
+    @apply border-t border-line bg-paper px-4 py-3 text-left text-[13.5px] italic text-muted;
+    caption-side: bottom;
+  }
+
+  .prose-body th {
+    @apply px-4 py-3.5 text-left align-top;
+  }
+
+  .prose-body thead th {
+    @apply bg-navy text-[12.5px] font-semibold uppercase tracking-[.12em] text-white;
+  }
+
+  .prose-body tbody th {
+    @apply border-t border-line bg-cream font-semibold text-navy;
+  }
+
+  .prose-body td {
+    @apply border-t border-line px-4 py-3.5 align-top text-[#2b3a42];
+  }
+
+  .prose-body tbody tr:nth-child(even) td {
+    @apply bg-paper;
+  }
+
+  /* Code */
+  .prose-body code {
+    @apply border border-line bg-cream px-1.5 py-px font-mono text-[.88em] text-navy;
+  }
+
+  .prose-body pre {
+    @apply my-8 overflow-x-auto border-l-[3px] border-gold bg-navy-deep p-6 text-[14.5px] leading-[1.75] text-[#e9e1d1];
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .prose-body pre code {
+    @apply border-0 bg-transparent p-0 text-inherit;
+    font-size: 1em;
+  }
+
+  /* Expandable FAQ: <details><summary>…</summary><p>…</p></details> */
+  .prose-body details {
+    @apply my-3 border border-line bg-white;
+  }
+
+  .prose-body summary {
+    @apply flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-semibold text-navy;
+  }
+
+  .prose-body summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .prose-body summary::after {
+    content: '+';
+    @apply font-serif text-2xl leading-none text-gold;
+  }
+
+  .prose-body details[open] summary {
+    @apply border-b border-line;
+  }
+
+  .prose-body details[open] summary::after {
+    content: '–';
+  }
+
+  .prose-body details> :not(summary) {
+    @apply mx-5;
+  }
+
+  .prose-body details>summary+* {
+    margin-top: 18px;
+  }
+
+  .prose-body details> :last-child {
+    margin-bottom: 18px;
+  }
+
+  /* Images and figures (for future articles) */
+  .prose-body img {
+    @apply my-8 w-full border border-line;
+  }
+
+  .prose-body figure {
+    @apply my-9;
+  }
+
+  .prose-body figure img {
+    @apply my-0;
+  }
+
+  .prose-body figcaption {
+    @apply mt-3 text-center text-[13.5px] italic text-muted;
+  }
+
+  /* Sources / footnotes */
+  .prose-body .footnotes {
+    @apply mt-14 border-t border-line pt-2;
+  }
+
+  .prose-body .footnotes h2 {
+    @apply mt-6 text-[22px];
+  }
+
+  .prose-body .footnotes li {
+    @apply mb-2 text-[15px] text-muted;
+  }
+
+  .prose-body .footnotes li:target {
+    background: rgba(241, 226, 189, .5);
+  }
+
 
   .js-reveal .reveal {
     opacity: 0;

@@ -104,7 +104,7 @@ export default function Home() {
                         <motion.p {...soft(1.65)} className="text-[15px] tracking-[.02em] text-white/90">B.Com. · LL.B. · LL.M. · C.S. (Executive) · Diploma in Cyber Law · Research Scholar (Ph.D. in Law)</motion.p>
                         <motion.div {...soft(1.85)} className="mt-[34px] flex flex-wrap gap-3.5">
                             <Magnetic><Link className="btn btn-solid" to="/#about">About the Chambers</Link></Magnetic>
-                            <Magnetic><Link className="btn" to="/insights/">Read Insights</Link></Magnetic>
+                            <Magnetic><Link className="btn" to="/article/">Read Insights</Link></Magnetic>
                         </motion.div>
                     </motion.div>
 
@@ -242,7 +242,7 @@ export default function Home() {
                             <Reveal variant="fade" className="eyebrow">Insights</Reveal>
                             <RevealText as="h2" className="h2" delay={0.1}>Notes on law & judgments</RevealText>
                         </div>
-                        <Reveal delay={0.3}><Link className="btn btn-dark" to="/insights/">All articles</Link></Reveal>
+                        <Reveal delay={0.3}><Link className="btn btn-dark" to="/article/">All articles</Link></Reveal>
                     </div>
                     <div className="grid grid-cols-1 gap-8 min-[901px]:grid-cols-3">
                         {posts.slice(0, 3).map((p, i) => <PostCard key={p.slug} post={p} index={i} />)}

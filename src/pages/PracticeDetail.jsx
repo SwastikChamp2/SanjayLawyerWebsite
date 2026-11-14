@@ -48,7 +48,7 @@ export default function PracticeDetail() {
                         </ul>
                     </Reveal>
                     <Reveal variant="right" delay={0.45} className="border border-navy bg-navy p-6 text-[14.5px] text-[#c8d5da]">
-                        <div className="eyebrow">Chambers</div>
+                        <div className="eyebrow">Sanjay Achhara Law Chambers</div>
                         <p className="mt-2.5">{site.officeAddress}</p>
                         <p className="mt-2.5">
                             <a className="text-white no-underline" href={`tel:${site.phone}`}>{site.phone}</a><br />

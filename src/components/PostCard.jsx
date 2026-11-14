@@ -15,7 +15,7 @@ export default function PostCard({ post, index = 0 }) {
                 <div className="text-[12.5px] tracking-[.12em] uppercase text-gold font-semibold">
                     {post.tagName} · <time className="whitespace-nowrap" dateTime={post.date}>{date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</time>
                 </div>
-                <h3 className="text-2xl"><Link className="stretched text-inherit no-underline" to={`/insights/${post.slug}/`}>{post.title}</Link></h3>
+                <h3 className="text-2xl"><Link className="stretched text-inherit no-underline" to={`/article/${post.slug}/`}>{post.title}</Link></h3>
                 <p className="text-[15px] text-muted">{post.excerpt}</p>
                 <span className="mt-auto text-[13px] tracking-[.1em] uppercase font-semibold text-navy transition-transform duration-500 group-hover:translate-x-1">Read article</span>
             </div>
