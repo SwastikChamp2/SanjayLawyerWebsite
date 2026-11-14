@@ -35,7 +35,17 @@ export default function AddArticle() {
     const [message, setMessage] = useState(null); // { type: 'error' | 'success', text }
 
     const [form, setForm] = useState({ title: '', tagName: '', date: todayISO(), excerpt: '', bodyHtml: '' });
+
+    const [articleSlug, setArticleSlug] = useState('');
+
     const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+
+    const onTitleChange = (e) => {
+        const title = e.target.value;
+
+        setForm((f) => ({ ...f, title }));
+        setArticleSlug(sanitizeSlug(title));
+    };
 
     // Cover image: new upload (cropped) / direct URL / existing (edit mode)
     const [coverMode, setCoverMode] = useState('upload');
@@ -56,6 +66,7 @@ export default function AddArticle() {
                 if (!alive) return;
                 if (!snap.exists()) { setNotFound(true); return; }
                 const d = snap.data();
+                setArticleSlug(editSlug);
                 setForm({
                     title: d.title || '',
                     tagName: d.tagName || '',
@@ -92,9 +103,25 @@ export default function AddArticle() {
         setCoverThumb(URL.createObjectURL(blob));
     };
 
+    const sanitizeSlug = (value) => {
+        return value
+            .toLowerCase()
+            .replace(/\s+/g, '-')       // Replace multiple spaces with one hyphen
+            .replace(/[^a-z0-9-]/g, '') // Allow only alphanumeric and hyphens
+            .replace(/-{2,}/g, '-')     // Prevent consecutive hyphens
+            .slice(0, 50);              // Maximum 50 characters
+    };
+
     const validate = () => {
         if (!form.title.trim()) return 'Title is required.';
         if (form.title.length > MAX_TITLE) return `Title must be ${MAX_TITLE} characters or fewer.`;
+
+        if (!articleSlug.trim()) return 'Article URL slug is required.';
+        if (articleSlug.length > 50) return 'URL slug cannot exceed 50 characters.';
+        if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(articleSlug)) {
+            return 'Invalid URL slug. Use only letters, numbers and single hyphens.';
+        }
+
         if (!form.tagName.trim()) return 'Category is required.';
         if (!form.date) return 'Date is required.';
         if (!form.excerpt.trim()) return 'Excerpt is required.';
@@ -135,11 +162,18 @@ export default function AddArticle() {
             };
 
             // 3. Save
-            let slug = editSlug;
+            const slug = isEdit ? editSlug : sanitizeTitle(articleSlug);
+
             if (isEdit) {
                 await updateDoc(doc(db, 'articles', slug), fields);
             } else {
-                slug = await generateUniqueSlug(form.title);
+                // Check whether the manually entered slug already exists
+                const existing = await getDoc(doc(db, 'articles', slug));
+
+                if (existing.exists()) {
+                    throw new Error('This URL slug is already in use. Please choose another one.');
+                }
+
                 await setDoc(doc(db, 'articles', slug), {
                     ...fields,
                     title: form.title.trim(),
@@ -231,11 +265,51 @@ export default function AddArticle() {
                         {/* Title */}
                         <div>
                             <label className={label} htmlFor="a-title">Title *</label>
-                            <input id="a-title" className={input} maxLength={MAX_TITLE} value={form.title} onChange={set('title')} disabled={isEdit} placeholder="Article title" />
+
+                            <input
+                                id="a-title"
+                                className={input}
+                                maxLength={MAX_TITLE}
+                                value={form.title}
+                                onChange={onTitleChange}
+                                disabled={isEdit}
+                                placeholder="Article title"
+                            />
+
                             <p className="mt-1 text-xs text-muted">
                                 {form.title.length}/{MAX_TITLE}
-                                {isEdit ? ' · title is locked because it forms the article URL' : form.title.trim() && ` · URL: /article/${sanitizeTitle(form.title)}/`}
+                                {isEdit && ' · title is locked because it forms the article URL'}
                             </p>
+
+                            {/* Article URL Slug */}
+                            <div className="mt-4">
+                                <label className={label} htmlFor="a-slug">
+                                    URL Slug *
+                                </label>
+
+                                <div className="flex items-center border border-line bg-white focus-within:border-gold">
+                                    <span className="shrink-0 border-r border-line bg-paper px-3 py-3 text-sm text-muted">
+                                        /article/
+                                    </span>
+
+                                    <input
+                                        id="a-slug"
+                                        className="min-w-0 flex-1 bg-transparent p-3 text-[16px] outline-none disabled:bg-paper disabled:text-muted"
+                                        value={articleSlug}
+                                        onChange={(e) => setArticleSlug(sanitizeSlug(e.target.value))}
+                                        disabled={isEdit}
+                                        placeholder="article-url-slug"
+                                    />
+
+                                    <span className="shrink-0 px-3 py-3 text-sm text-muted">/</span>
+                                </div>
+
+                                <p className="mt-1 text-xs text-muted">
+                                    {isEdit
+                                        ? 'URL slug cannot be changed after publishing.'
+                                        : 'Automatically generated from the title. You can edit it before publishing.'}
+                                </p>
+                            </div>
                         </div>
 
                         {/* Category + date */}
