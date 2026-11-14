@@ -17,6 +17,7 @@ export const nav = [
 ];
 
 export const footerNav = [
+    { label: 'Publications', to: '/publications/' },
     { label: 'Disclaimer', to: '/disclaimer/' },
     { label: 'Privacy', to: '/privacy/' },
 ];

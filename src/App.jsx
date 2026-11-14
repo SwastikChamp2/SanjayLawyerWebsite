@@ -6,6 +6,9 @@ import PracticeDetail from './pages/PracticeDetail.jsx';
 import Article from './pages/Articles.jsx';
 import ArticleDetail from './pages/ArticleDetail.jsx';
 import Approach from './pages/Approach.jsx';
+import Publications from './pages/Publications.jsx';
+import Disclaimer from './pages/Disclaimer.jsx';
+import Privacy from './pages/Privacy.jsx';
 
 
 export default function App() {
@@ -18,6 +21,9 @@ export default function App() {
         <Route path="approach" element={<Approach />} />
         <Route path="/article/" element={<Article />} />
         <Route path="/article/:slug/" element={<ArticleDetail />} />
+        <Route path="/publications/" element={<Publications />} />
+        <Route path="/disclaimer/" element={<Disclaimer />} />
+        <Route path="/privacy/" element={<Privacy />} />
       </Route>
     </Routes>
   );
