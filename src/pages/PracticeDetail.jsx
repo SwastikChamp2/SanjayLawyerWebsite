@@ -60,17 +60,7 @@ export default function PracticeDetail() {
                 </aside>
             </div>
 
-            <section className="block-section bg-cream">
-                <div className="wrap">
-                    <Reveal variant="fade" className="eyebrow">Insights</Reveal>
-                    <RevealText as="h2" className="h2" delay={0.1}>{`Articles on ${area.title}`}</RevealText>
-                    <div className="mt-9 grid grid-cols-1 gap-8 min-[901px]:grid-cols-3">
-                        {related.length
-                            ? related.map((p, i) => <PostCard key={p.slug} post={p} index={i} />)
-                            : <Reveal as="p" className="text-muted">Articles on this topic will appear here.</Reveal>}
-                    </div>
-                </div>
-            </section>
+
         </>
     );
 }

@@ -11,6 +11,7 @@ export const nav = [
     { label: 'Home', to: '/' },
     { label: 'About', to: '/#about' },
     { label: 'Practice', to: '/practice/' },
+    { label: 'Approach', to: '/approach/' },
     { label: 'Insights', to: '/insights/' },
     { label: 'Contact', to: '/#contact' },
 ];
