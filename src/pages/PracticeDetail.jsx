@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import PageHero from '../components/PageHero.jsx';
 import PostCard from '../components/PostCard.jsx';
+import { Reveal, RevealText } from '../components/Motion.jsx';
 import { practiceAreas, posts, site } from '../data.jsx';
 
 export default function PracticeDetail() {
@@ -27,7 +28,7 @@ export default function PracticeDetail() {
             />
 
             <div className="wrap grid grid-cols-1 items-start gap-0 min-[901px]:grid-cols-[minmax(0,1fr)_320px] min-[901px]:gap-14">
-                <article className="prose-body pt-16 pb-10">
+                <Reveal as="article" delay={0.2} className="prose-body pt-16 pb-10">
                     {/* Replace with the page body for this area (was Ghost {{content}}) */}
                     <p>{area.excerpt}</p>
                     <h2>Scope of work</h2>
@@ -35,38 +36,38 @@ export default function PracticeDetail() {
                     <div className="bg-cream border border-line px-6 py-5 text-[14.5px] text-[#4b5a61] my-10">
                         <strong>Note:</strong> This page describes areas of practice as permitted under Rule 36 of the Bar Council of India Rules. It is for information only and is not legal advice or a solicitation of work.
                     </div>
-                </article>
+                </Reveal>
 
                 <aside className="flex flex-col gap-5 pt-0 pb-10 min-[901px]:sticky min-[901px]:top-[110px] min-[901px]:pt-16">
-                    <div className="border border-line bg-white p-6">
+                    <Reveal variant="right" delay={0.3} className="border border-line bg-white p-6">
                         <div className="eyebrow">Areas of Practice</div>
                         <ul className="mt-3 list-none">
                             {practiceAreas.map((a) => (
                                 <li key={a.slug} className="border-b border-line last:border-0">
-                                    <Link to={`/practice/${a.slug}/`} className="block py-2.5 text-[15px] text-navy no-underline hover:text-gold">{a.title}</Link>
+                                    <Link to={`/practice/${a.slug}/`} className={`block py-2.5 text-[15px] no-underline transition-all duration-300 hover:translate-x-1.5 hover:text-gold ${a.slug === slug ? 'text-gold' : 'text-navy'}`}>{a.title}</Link>
                                 </li>
                             ))}
                         </ul>
-                    </div>
-                    <div className="border border-navy bg-navy p-6 text-[14.5px] text-[#c8d5da]">
+                    </Reveal>
+                    <Reveal variant="right" delay={0.45} className="border border-navy bg-navy p-6 text-[14.5px] text-[#c8d5da]">
                         <div className="eyebrow">Chambers</div>
                         <p className="mt-2.5">{site.officeAddress}</p>
                         <p className="mt-2.5">
                             <a className="text-white no-underline" href={`tel:${site.phone}`}>{site.phone}</a><br />
                             <a className="text-white no-underline" href={`mailto:${site.email}`}>{site.email}</a>
                         </p>
-                    </div>
+                    </Reveal>
                 </aside>
             </div>
 
             <section className="block-section bg-cream">
                 <div className="wrap">
-                    <div className="eyebrow">Insights</div>
-                    <h2 className="h2">Articles on {area.title}</h2>
+                    <Reveal variant="fade" className="eyebrow">Insights</Reveal>
+                    <RevealText as="h2" className="h2" delay={0.1}>{`Articles on ${area.title}`}</RevealText>
                     <div className="mt-9 grid grid-cols-1 gap-8 min-[901px]:grid-cols-3">
                         {related.length
-                            ? related.map((p) => <PostCard key={p.slug} post={p} />)
-                            : <p className="text-muted">Articles on this topic will appear here.</p>}
+                            ? related.map((p, i) => <PostCard key={p.slug} post={p} index={i} />)
+                            : <Reveal as="p" className="text-muted">Articles on this topic will appear here.</Reveal>}
                     </div>
                 </div>
             </section>

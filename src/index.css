@@ -20,6 +20,32 @@
 
   --animate-cue: cue 1.8s infinite;
   --animate-rise: rise 1s ease both;
+  --animate-shimmer: shimmer 8s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+
+  @keyframes shimmer {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-7px);
+    }
+  }
+
+
 
   @keyframes cue {
     0% {
@@ -113,6 +139,25 @@
 
   .btn-dark {
     @apply text-navy border-navy hover:bg-navy hover:text-white;
+  }
+
+  .btn {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .35) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform .9s ease;
+    pointer-events: none;
+  }
+
+  .btn:hover::after {
+    transform: translateX(120%);
   }
 
   .block-section {

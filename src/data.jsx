@@ -1,8 +1,8 @@
 // Site-wide settings (were Ghost @custom.* values) — edit these.
 export const site = {
-    enrolment: 'XXXX/2026',
-    phone: '+91 00000 00000',
-    email: 'chambers@example.com',
+    enrolment: 'MAH/12289/2026',
+    phone: '+91 93237 93229',
+    email: 'contact@sanjayachhra.com',
     officeAddress: 'Neptune Flying Colors, Mulund (W), Mumbai',
     showPreviewRibbon: false,
 };
@@ -19,6 +19,11 @@ export const footerNav = [
     { label: 'Disclaimer', to: '/disclaimer/' },
     { label: 'Privacy', to: '/privacy/' },
 ];
+
+export const images = {
+    portrait: 'https://sanjay.178-105-212-85.sslip.io/assets/images/sanjay.webp',
+    monogram: 'https://sanjay.178-105-212-85.sslip.io/assets/images/monogram.svg',
+};
 
 const svg = (children) => (
     <svg className="mb-[18px] size-[34px] fill-none stroke-gold stroke-[1.4] [stroke-linecap:round] [stroke-linejoin:round] transition-transform duration-300 group-hover:-translate-y-[3px]" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
