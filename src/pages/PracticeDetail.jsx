@@ -29,10 +29,8 @@ export default function PracticeDetail() {
 
             <div className="wrap grid grid-cols-1 items-start gap-0 min-[901px]:grid-cols-[minmax(0,1fr)_320px] min-[901px]:gap-14">
                 <Reveal as="article" delay={0.2} className="prose-body pt-16 pb-10">
-                    {/* Replace with the page body for this area (was Ghost {{content}}) */}
                     <p>{area.excerpt}</p>
-                    <h2>Scope of work</h2>
-                    <p>Detailed description of this area of practice goes here.</p>
+                    {area.body}
                     <div className="bg-cream border border-line px-6 py-5 text-[14.5px] text-[#4b5a61] my-10">
                         <strong>Note:</strong> This page describes areas of practice as permitted under Rule 36 of the Bar Council of India Rules. It is for information only and is not legal advice or a solicitation of work.
                     </div>
