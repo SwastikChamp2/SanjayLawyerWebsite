@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import PageHero from '../components/PageHero.jsx';
 import { Reveal } from '../components/Motion.jsx';
-import { posts, formatDate } from '../data.jsx';
+import { formatDate } from '../data.jsx';
+import { useArticles } from '../hooks/useArticles';
 
 const PER_PAGE = 15;
 
@@ -54,7 +55,8 @@ export function ArticleCard({ post, index }) {
 
 export default function Articles() {
     const [params] = useSearchParams();
-    const sorted = useMemo(() => [...posts].sort((a, b) => b.date.localeCompare(a.date)), []);
+    // Built-in articles + Firestore articles, newest first
+    const { posts: sorted, loading } = useArticles();
 
     const totalPages = Math.max(1, Math.ceil(sorted.length / PER_PAGE));
     const requested = parseInt(params.get('page') || '1', 10);
@@ -80,7 +82,7 @@ export default function Articles() {
             <section ref={listRef} id="articles-list" className="block-section paper">
                 <div className="wrap">
                     {visible.length === 0 ? (
-                        <p className="text-center text-muted">No articles have been published yet.</p>
+                        <p className="text-center text-muted">{loading ? 'Loading articles…' : 'No articles have been published yet.'}</p>
                     ) : (
                         <div key={page} className="grid grid-cols-1 gap-8 min-[701px]:grid-cols-2 min-[1001px]:grid-cols-3">
                             {visible.map((p, i) => <ArticleCard key={p.slug} post={p} index={i} />)}

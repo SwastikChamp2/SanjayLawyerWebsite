@@ -9,6 +9,8 @@ import Approach from './pages/Approach.jsx';
 import Publications from './pages/Publications.jsx';
 import Disclaimer from './pages/Disclaimer.jsx';
 import Privacy from './pages/Privacy.jsx';
+import AddArticle from './pages/AddArticle.jsx';
+import ArticleOverview from './pages/ArticleOverview.jsx';
 
 
 export default function App() {
@@ -19,6 +21,9 @@ export default function App() {
         <Route path="practice" element={<PracticeIndex />} />
         <Route path="practice/:slug" element={<PracticeDetail />} />
         <Route path="approach" element={<Approach />} />
+        <Route path="/article-overview/" element={<ArticleOverview />} />
+        <Route path="/edit-article/:slug/" element={<AddArticle />} />
+        <Route path="/add-article/" element={<AddArticle />} />
         <Route path="/article/" element={<Article />} />
         <Route path="/article/:slug/" element={<ArticleDetail />} />
         <Route path="/publications/" element={<Publications />} />

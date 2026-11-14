@@ -1,19 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FaLinkedinIn, FaWhatsapp, FaFacebookF, FaXTwitter, FaLink, FaCheck } from 'react-icons/fa6';
 import { Reveal, RevealText } from '../components/Motion.jsx';
 import { ArticleCard } from './Articles.jsx';
-import { posts, images, author, formatDate } from '../data.jsx';
-
-const sorted = [...posts].sort((a, b) => b.date.localeCompare(a.date));
+import DOMPurify from 'dompurify';
+import { images, author, formatDate } from '../data.jsx';
+import { useArticles } from '../hooks/useArticles';
+import { isAdmin } from '../admin/adminAuth';
 
 /* Rich-text styles for article bodies. Plain CSS (no @apply) because this
    <style> tag is not processed by Tailwind. Colours come from the theme variables. */
 const proseCss = `
 .prose-body > :first-child { margin-top: 0; }
+.prose-body > .contents > :first-child { margin-top: 0; }
 .prose-body [id] { scroll-margin-top: 96px; }
 
-/* Headings */
+.prose-body h1 { font-size: 36px; margin: 54px 0 16px; }
 .prose-body h2 { font-size: 30px; margin: 46px 0 14px; }
 .prose-body h3 { font-size: 26px; margin: 34px 0 10px; }
 .prose-body h4 { font-family: var(--font-serif); font-size: 21px; font-weight: 600; line-height: 1.25; color: var(--color-navy); margin: 28px 0 8px; }
@@ -150,9 +152,20 @@ function ShareBar({ title }) {
 
 export default function ArticleDetail() {
     const { slug } = useParams();
+    const { posts: sorted, loading } = useArticles();
     const post = sorted.find((p) => p.slug === slug);
 
+    // Firestore articles store their body as an HTML string; sanitize before rendering
+    const safeHtml = useMemo(
+        () => (post?.bodyHtml ? DOMPurify.sanitize(post.bodyHtml, { USE_PROFILES: { html: true } }) : ''),
+        [post]
+    );
+
     useEffect(() => { window.scrollTo(0, 0); }, [slug]);
+
+    if (!post && loading) {
+        return <section className="block-section wrap"><p className="text-muted">Loading article…</p></section>;
+    }
 
     if (!post) {
         return (
@@ -194,13 +207,21 @@ export default function ArticleDetail() {
             {/* Body */}
             <div className="mx-auto w-full max-w-[860px] px-6 pt-14 pb-20">
                 <Reveal as="article" delay={0.1} className="prose-body">
-                    {post.body ?? <p>{post.excerpt}</p>}
+                    {safeHtml
+                        ? <div className="contents" dangerouslySetInnerHTML={{ __html: safeHtml }} />
+                        : (post.body ?? <p>{post.excerpt}</p>)}
                     <div className="bg-cream border border-line px-6 py-5 text-[14.5px] text-[#4b5a61] my-10">
                         <strong>Note:</strong> This article is for general information only and is not legal advice. Readers should consult the current text of the law for their specific facts.
                     </div>
                 </Reveal>
 
                 <ShareBar title={post.title} />
+
+                {post.remote && isAdmin() && (
+                    <div className="mt-6">
+                        <Link to={`/edit-article/${post.slug}/`} className="text-sm font-semibold text-gold">Edit this article →</Link>
+                    </div>
+                )}
 
                 {/* Author */}
                 <div className="mt-10 flex flex-col items-center gap-6 bg-navy p-8 text-center min-[701px]:flex-row min-[701px]:text-left">
