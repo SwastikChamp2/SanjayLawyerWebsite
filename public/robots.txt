@@ -1,0 +1,98 @@
+# robots.txt — https://sanjayachhra.com
+# Public informational pages may be crawled and cited. Administrative pages
+# are excluded from indexing.
+
+User-agent: *
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+# Search and AI crawlers are welcome to index and cite the public pages.
+# Admin paths are repeated for named agents because a named group replaces
+# the wildcard group for that crawler.
+User-agent: Googlebot
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: GPTBot
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: Applebot
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: CCBot
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+User-agent: meta-externalagent
+Allow: /
+Disallow: /add-article
+Disallow: /edit-article
+Disallow: /article-overview
+
+Sitemap: https://sanjayachhra.com/sitemap.xml

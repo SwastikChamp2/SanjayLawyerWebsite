@@ -22,7 +22,7 @@ function Shell() {
             if (el) { lenis ? lenis.scrollTo(el, { offset: -96, duration: 1.6 }) : el.scrollIntoView(); return; }
         }
         lenis ? lenis.scrollTo(0, { immediate: true }) : window.scrollTo(0, 0);
-    }, [key, lenis]);
+    }, [key, hash, lenis]);
 
     // Freeze page scroll while the disclaimer is open
     useEffect(() => {
@@ -31,7 +31,7 @@ function Shell() {
     }, [gateOpen, lenis]);
 
     const acceptGate = () => {
-        try { localStorage.setItem('sa-disclaimer-ack', '1'); } catch { }
+        try { localStorage.setItem('sa-disclaimer-ack', '1'); } catch { /* storage unavailable */ }
         setGateOpen(false);
     };
 

@@ -4,8 +4,17 @@ import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import PracticeCards from '../components/PracticeCards.jsx';
 import PostCard from '../components/PostCard.jsx';
 import Contact from '../components/Contact.jsx';
+import MetaSEO from '../components/MetaSEO.jsx';
 import { Counter, Magnetic, Reveal, RevealText, Rule, ease } from '../components/Motion.jsx';
-import { site, posts, images } from '../data.jsx';
+import { site, images } from '../data.jsx';
+import { useArticles } from '../hooks/useArticles';
+import {
+    DEFAULT_DESCRIPTION,
+    DEFAULT_KEYWORDS,
+    LEGAL_SERVICE_ID,
+    SITE_TITLE,
+} from '../seo/siteConfig';
+import { webPageSchema } from '../seo/schemas';
 
 const timeline = [
     ['1999', 'Joined the Income Tax Department', 'Mumbai'],
@@ -61,6 +70,8 @@ const sectionHead = 'mb-[50px] flex flex-wrap items-end justify-between gap-10';
 const goldText = 'w-fit pb-[.1em] text-transparent bg-clip-text bg-[linear-gradient(100deg,#b8955a_0%,#e6cf9f_25%,#b8955a_50%,#e6cf9f_75%,#b8955a_100%)] bg-[length:200%_100%] animate-shimmer';
 
 export default function Home() {
+    const { posts: latestPosts } = useArticles();
+
     // Hero parallax
     const heroRef = useRef(null);
     const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
@@ -78,10 +89,30 @@ export default function Home() {
     const { scrollYProgress: qP } = useScroll({ target: quoteRef, offset: ['start end', 'end start'] });
     const scalesY = useTransform(qP, [0, 1], [60, -60]);
 
+    const homeSchema = webPageSchema({
+        path: '/',
+        name: 'Adv. Sanjay Achhra — Advocate, High Court, Mumbai',
+        description: DEFAULT_DESCRIPTION,
+        keywords: DEFAULT_KEYWORDS,
+        about: { '@id': LEGAL_SERVICE_ID },
+        mainEntity: { '@id': LEGAL_SERVICE_ID },
+        speakable: true,
+    });
+
     return (
         <>
+            <MetaSEO
+                title={SITE_TITLE}
+                absoluteTitle
+                description={DEFAULT_DESCRIPTION}
+                path="/"
+                keywords={DEFAULT_KEYWORDS}
+                focusedKeyword="advocate High Court Mumbai"
+                jsonLd={[homeSchema]}
+            />
+
             {/* Hero */}
-            <section ref={heroRef} className="hero relative overflow-hidden bg-navy text-white">
+            <section ref={heroRef} aria-label="Introduction" className="hero relative overflow-hidden bg-navy text-white">
                 <motion.img style={{ y: markY }} className="pointer-events-none absolute -left-[90px] -bottom-[120px] z-0 w-[460px] opacity-[.06] max-[900px]:hidden" src={images.monogram} alt="" aria-hidden="true" />
                 <div className="wrap relative z-[1] grid grid-cols-1 items-center gap-10 py-[70px] max-[900px]:pt-12 min-[901px]:min-h-[620px] min-[901px]:grid-cols-[1.15fr_.85fr]">
                     <motion.div style={{ y: textY }}>
@@ -126,7 +157,7 @@ export default function Home() {
                         >
                             <motion.img
                                 className="w-full aspect-[3/4] object-cover object-top rounded-[190px_190px_2px_2px]"
-                                src={images.portrait} alt="Adv. Sanjay Achhra" width="709" height="945"
+                                src={images.portrait} alt="Adv. Sanjay Achhra, Advocate, High Court, Mumbai" width="709" height="945" fetchPriority="high"
                                 initial={{ scale: 1.08 }} animate={{ scale: 1 }} transition={{ duration: 2.8, ease, delay: 0.2 }}
                             />
                         </motion.div>
@@ -146,7 +177,7 @@ export default function Home() {
             </section>
 
             {/* Credentials strip */}
-            <div className="border-t border-gold/35 bg-navy-deep text-[#d8e1e4]">
+            <section aria-label="Qualifications and experience" className="border-t border-gold/35 bg-navy-deep text-[#d8e1e4]">
                 <ul className="wrap grid list-none grid-cols-2 min-[901px]:grid-cols-5">
                     {creds.map(([a, b], i) => (
                         <Reveal as="li" key={a} delay={i * 0.1} className="border-b border-r border-gold/20 px-[18px] py-[26px] text-center text-[13.5px] tracking-[.04em] min-[901px]:border-b-0 min-[901px]:last:border-r-0">
@@ -154,10 +185,10 @@ export default function Home() {
                         </Reveal>
                     ))}
                 </ul>
-            </div>
+            </section>
 
             {/* About */}
-            <section className="block-section paper" id="about">
+            <section className="block-section paper" id="about" aria-label="About Adv. Sanjay Achhra">
                 <div className="wrap grid grid-cols-1 items-start gap-10 min-[901px]:grid-cols-[.9fr_1.1fr] min-[901px]:gap-20">
                     <div>
                         <Reveal variant="fade" className="eyebrow">About</Reveal>
@@ -206,7 +237,7 @@ export default function Home() {
             </section>
 
             {/* Practice */}
-            <section className="block-section bg-cream" id="practice">
+            <section className="block-section bg-cream" id="practice" aria-label="Areas of practice">
                 <div className="wrap">
                     <div className={sectionHead}>
                         <div>
@@ -223,7 +254,7 @@ export default function Home() {
             </section>
 
             {/* Numbers */}
-            <section className="border-y border-gold/25 bg-navy-deep text-[#c8d5da]">
+            <section aria-label="Professional experience in numbers" className="border-y border-gold/25 bg-navy-deep text-[#c8d5da]">
                 <div className="wrap grid grid-cols-2 min-[801px]:grid-cols-4">
                     {numbers.map(([n, label], i) => (
                         <Reveal key={n} delay={i * 0.12} className="border-b border-r border-gold/20 px-5 py-[54px] text-center min-[801px]:border-b-0 min-[801px]:last:border-r-0">
@@ -235,7 +266,7 @@ export default function Home() {
             </section>
 
             {/* Insights */}
-            <section className="block-section paper" id="insights">
+            <section className="block-section paper" id="insights" aria-label="Latest articles">
                 <div className="wrap">
                     <div className={sectionHead}>
                         <div>
@@ -245,13 +276,13 @@ export default function Home() {
                         <Reveal delay={0.3}><Link className="btn btn-dark" to="/article/">All articles</Link></Reveal>
                     </div>
                     <div className="grid grid-cols-1 gap-8 min-[901px]:grid-cols-3">
-                        {posts.slice(0, 3).map((p, i) => <PostCard key={p.slug} post={p} index={i} />)}
+                        {latestPosts.slice(0, 3).map((p, i) => <PostCard key={p.slug} post={p} index={i} />)}
                     </div>
                 </div>
             </section>
 
             {/* Research */}
-            <section className="block-section bg-cream" id="research">
+            <section className="block-section bg-cream" id="research" aria-label="Research and publications">
                 <div className="wrap grid grid-cols-1 items-start gap-10 min-[901px]:grid-cols-[.9fr_1.1fr] min-[901px]:gap-20">
                     <div className="min-[901px]:sticky min-[901px]:top-[120px]">
                         <Reveal variant="fade" className="eyebrow">Research &amp; Publications</Reveal>

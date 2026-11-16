@@ -8,8 +8,8 @@ export default function PostCard({ post, index = 0 }) {
         <Reveal as="article" delay={(index % 3) * 0.12} className="group relative flex flex-col bg-paper border border-line transition duration-500 hover:-translate-y-1.5 hover:shadow-[0_24px_40px_-28px_rgba(18,60,79,.5)]">
             <div className="thumb relative aspect-video overflow-hidden bg-navy flex items-center justify-center">
                 {post.image
-                    ? <img src={post.image} alt="" className="absolute inset-0 size-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
-                    : <span className="relative z-[1] font-serif text-[22px] tracking-[.14em] uppercase text-gold transition-transform duration-700 group-hover:scale-105">{post.tagName}</span>}
+                    ? <img src={post.image} alt={post.title} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
+                    : <span className="relative z-[1] font-serif text-[22px] tracking-[.14em] uppercase text-gold transition-transform duration-700 group-hover:scale-105" aria-hidden="true">{post.tagName}</span>}
             </div>
             <div className="flex flex-col gap-3 flex-1 px-[26px] pt-[26px] pb-[30px]">
                 <div className="text-[12.5px] tracking-[.12em] uppercase text-gold font-semibold">

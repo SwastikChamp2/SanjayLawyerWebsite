@@ -11,6 +11,7 @@ import Disclaimer from './pages/Disclaimer.jsx';
 import Privacy from './pages/Privacy.jsx';
 import AddArticle from './pages/AddArticle.jsx';
 import ArticleOverview from './pages/ArticleOverview.jsx';
+import NotFound from './pages/NotFound.jsx';
 
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/publications/" element={<Publications />} />
         <Route path="/disclaimer/" element={<Disclaimer />} />
         <Route path="/privacy/" element={<Privacy />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

@@ -1,9 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import PageHero from '../components/PageHero.jsx';
+import MetaSEO from '../components/MetaSEO.jsx';
 import { Reveal } from '../components/Motion.jsx';
 import { formatDate } from '../data.jsx';
 import { useArticles } from '../hooks/useArticles';
+import { DEFAULT_KEYWORDS } from '../seo/siteConfig';
+import { breadcrumbSchema, itemListSchema, webPageSchema } from '../seo/schemas';
 
 const PER_PAGE = 15;
 
@@ -33,8 +36,8 @@ export function ArticleCard({ post, index }) {
         >
             <div className="thumb relative aspect-video overflow-hidden bg-navy flex items-center justify-center">
                 {post.image
-                    ? <img src={post.image} alt="" className="absolute inset-0 size-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
-                    : <span className="relative z-[1] font-serif text-[22px] tracking-[.14em] uppercase text-gold transition-transform duration-700 group-hover:scale-105">{post.tagName}</span>}
+                    ? <img src={post.image} alt={post.title} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
+                    : <span className="relative z-[1] font-serif text-[22px] tracking-[.14em] uppercase text-gold transition-transform duration-700 group-hover:scale-105" aria-hidden="true">{post.tagName}</span>}
             </div>
             <div className="flex flex-1 flex-col p-8">
                 <div className="flex items-center justify-between gap-3">
@@ -63,6 +66,39 @@ export default function Articles() {
     const page = Number.isFinite(requested) ? Math.min(Math.max(requested, 1), totalPages) : 1;
     const visible = sorted.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
+    const listPath = page === 1 ? '/article/' : `/article/?page=${page}`;
+    const title = page === 1 ? 'Articles' : `Articles — Page ${page}`;
+    const description =
+        'Articles and legal notes by Adv. Sanjay Achhra on income tax litigation, the Black Money Act, PMLA, cyber law, MSME arbitration, GST and allied laws in Mumbai.';
+    const keywords = [
+        ...DEFAULT_KEYWORDS.slice(0, 10),
+        'legal articles India',
+        'tax law insights',
+        'Bombay High Court judgments',
+        'Mumbai advocate articles',
+    ];
+    const list = itemListSchema({
+        path: '/article/',
+        name: 'Articles by Adv. Sanjay Achhra',
+        items: sorted.map((post) => ({
+            name: post.title,
+            path: `/article/${post.slug}/`,
+        })),
+    });
+    const pageSchema = webPageSchema({
+        path: listPath,
+        type: 'CollectionPage',
+        name: 'Articles — Adv. Sanjay Achhra, Mumbai',
+        description,
+        keywords,
+        mainEntity: { '@id': list['@id'] },
+        breadcrumbs: [
+            { name: 'Home', path: '/' },
+            { name: 'Articles', path: '/article/' },
+        ],
+        speakable: true,
+    });
+
     // Bring the list back into view when the page changes (not on first load)
     const listRef = useRef(null);
     const first = useRef(true);
@@ -73,13 +109,25 @@ export default function Articles() {
 
     return (
         <>
+            <MetaSEO
+                title={title}
+                description={description}
+                path={listPath}
+                keywords={keywords}
+                focusedKeyword="legal articles by a Mumbai advocate"
+                jsonLd={[pageSchema, list, breadcrumbSchema([
+                    { name: 'Home', path: '/' },
+                    { name: 'Articles', path: '/article/' },
+                ])]}
+            />
+
             <PageHero
                 crumbs={[{ label: 'Home', to: '/' }, { label: 'Articles' }]}
                 title="Articles"
                 sub="Articles, academic work, law insights and case studies on direct-tax litigation and allied laws."
             />
 
-            <section ref={listRef} id="articles-list" className="block-section paper">
+            <section ref={listRef} id="articles-list" className="block-section paper" aria-label="Published articles">
                 <div className="wrap">
                     {visible.length === 0 ? (
                         <p className="text-center text-muted">{loading ? 'Loading articles…' : 'No articles have been published yet.'}</p>

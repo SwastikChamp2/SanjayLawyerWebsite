@@ -3,7 +3,10 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 import PageHero from '../components/PageHero.jsx';
 import Contact from '../components/Contact.jsx';
+import MetaSEO from '../components/MetaSEO.jsx';
 import { Counter, Reveal, RevealText, Rule, ease } from '../components/Motion.jsx';
+import { DEFAULT_KEYWORDS, LEGAL_SERVICE_ID } from '../seo/siteConfig';
+import { breadcrumbSchema, webPageSchema } from '../seo/schemas';
 
 const record = ['Notices', 'Replies', 'Documents', 'Orders'];
 
@@ -86,6 +89,31 @@ export default function Approach() {
     const lenis = useLenis();
     const [active, setActive] = useState(1);
 
+    const path = '/approach/';
+    const description =
+        'How Adv. Sanjay Achhra reads the record, prepares replies and submissions, considers every remedy and represents clients before tax authorities, the ITAT and the Bombay High Court.';
+    const keywords = [
+        ...DEFAULT_KEYWORDS.slice(0, 10),
+        'tax litigation process Mumbai',
+        'legal case preparation',
+        'income tax appeal representation',
+        'advocate approach Mumbai',
+    ];
+    const breadcrumbs = [
+        { name: 'Home', path: '/' },
+        { name: 'Approach', path },
+    ];
+    const page = webPageSchema({
+        path,
+        type: 'AboutPage',
+        name: 'Approach — Sanjay Achhra Law Chambers',
+        description,
+        keywords,
+        about: { '@id': LEGAL_SERVICE_ID },
+        breadcrumbs,
+        speakable: true,
+    });
+
     // Fill the gold line as the steps are scrolled
     const tlRef = useRef(null);
     const { scrollYProgress } = useScroll({ target: tlRef, offset: ['start 70%', 'end 60%'] });
@@ -109,6 +137,15 @@ export default function Approach() {
 
     return (
         <>
+            <MetaSEO
+                title="Approach"
+                description={description}
+                path={path}
+                keywords={keywords}
+                focusedKeyword="tax litigation process in Mumbai"
+                jsonLd={[page, breadcrumbSchema(breadcrumbs)]}
+            />
+
             <PageHero
                 crumbs={[{ label: 'Home', to: '/' }, { label: 'Approach' }]}
                 title="Approach"
@@ -116,7 +153,7 @@ export default function Approach() {
             />
 
             {/* Overview */}
-            <section className="block-section paper">
+            <section className="block-section paper" aria-label="Overview of the Chambers' approach">
                 <div className="wrap max-w-[920px] text-center">
                     <Reveal variant="fade" className="eyebrow">Overview</Reveal>
                     <RevealText as="p" delay={0.1} stagger={0.04} className="mx-auto mt-4 font-serif text-[clamp(26px,3.4vw,38px)] leading-[1.3] text-navy">
@@ -145,7 +182,7 @@ export default function Approach() {
             </section>
 
             {/* Steps */}
-            <section className="block-section bg-cream">
+            <section className="block-section bg-cream" aria-label="The five-step process">
                 <div className="wrap grid grid-cols-1 items-start gap-12 min-[901px]:grid-cols-[280px_1fr] min-[901px]:gap-20">
                     {/* side index (desktop) */}
                     <div className="hidden min-[901px]:sticky min-[901px]:top-[120px] min-[901px]:block">
@@ -196,7 +233,7 @@ export default function Approach() {
             </section>
 
             {/* Background */}
-            <section className="block-section bg-navy-deep text-[#c8d5da]">
+            <section className="block-section bg-navy-deep text-[#c8d5da]" aria-label="Professional background">
                 <div className="wrap grid grid-cols-1 items-start gap-12 min-[901px]:grid-cols-[.8fr_1.2fr] min-[901px]:gap-20">
                     <div>
                         <Reveal variant="fade" className="eyebrow">Background</Reveal>
@@ -223,7 +260,7 @@ export default function Approach() {
             </section>
 
             {/* Confidentiality */}
-            <section className="block-section paper">
+            <section className="block-section paper" aria-label="Confidentiality">
                 <div className="wrap grid grid-cols-1 items-center gap-10 min-[901px]:grid-cols-[.6fr_1.4fr] min-[901px]:gap-20">
                     <svg className="mx-auto w-[150px] text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth=".6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         {['M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6z', 'M9.5 11.5h5v4h-5z', 'M10.5 11.5v-1.2a1.5 1.5 0 0 1 3 0v1.2'].map((d, i) => (

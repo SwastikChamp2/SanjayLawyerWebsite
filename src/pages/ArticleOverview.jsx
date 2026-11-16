@@ -4,6 +4,7 @@ import { collection, deleteDoc, doc, getDoc, getDocs } from 'firebase/firestore'
 import { db } from '../firebase/firebase';
 import PageHero from '../components/PageHero.jsx';
 import AdminLogin from '../components/AdminLogin.jsx';
+import MetaSEO from '../components/MetaSEO.jsx';
 import { formatDate } from '../data.jsx';
 import { isAdmin, logoutAdmin } from '../admin/adminAuth';
 import { invalidateArticles } from '../hooks/useArticles';
@@ -46,6 +47,7 @@ export default function ArticleOverview() {
         }
     }, []);
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- load() sets loading state for the admin list
     useEffect(() => { if (authed) load(); }, [authed, load]);
 
     const remove = async (article) => {
@@ -84,6 +86,7 @@ export default function ArticleOverview() {
     if (!authed) {
         return (
             <>
+                <MetaSEO title="Manage articles" path="/article-overview/" noindex />
                 <PageHero {...heroProps} />
                 <section className="block-section paper">
                     <div className="wrap"><AdminLogin onSuccess={() => setAuthed(true)} /></div>
@@ -94,6 +97,7 @@ export default function ArticleOverview() {
 
     return (
         <>
+            <MetaSEO title="Manage articles" path="/article-overview/" noindex />
             <PageHero {...heroProps} />
             <section className="block-section paper">
                 <div className="wrap">
@@ -137,8 +141,8 @@ export default function ArticleOverview() {
                                 <article key={a.slug} className="flex flex-col border border-line bg-white">
                                     <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-navy">
                                         {a.image
-                                            ? <img src={a.image} alt="" className="absolute inset-0 size-full object-cover" />
-                                            : <span className="font-serif text-[22px] uppercase tracking-[.14em] text-gold">{a.tagName}</span>}
+                                            ? <img src={a.image} alt={a.title} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
+                                            : <span className="font-serif text-[22px] uppercase tracking-[.14em] text-gold" aria-hidden="true">{a.tagName}</span>}
                                     </div>
                                     <div className="flex flex-1 flex-col p-6">
                                         <div className="flex items-center justify-between gap-3">

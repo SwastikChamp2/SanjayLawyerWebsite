@@ -4,9 +4,22 @@ import { FaLinkedinIn, FaWhatsapp, FaFacebookF, FaXTwitter, FaLink, FaCheck } fr
 import { Reveal, RevealText } from '../components/Motion.jsx';
 import { ArticleCard } from './Articles.jsx';
 import DOMPurify from 'dompurify';
+import MetaSEO from '../components/MetaSEO.jsx';
 import { images, author, formatDate } from '../data.jsx';
 import { useArticles } from '../hooks/useArticles';
 import { isAdmin } from '../admin/adminAuth';
+import {
+    DEFAULT_IMAGE,
+    DEFAULT_KEYWORDS,
+    absoluteUrl,
+} from '../seo/siteConfig';
+import {
+    articleSchema,
+    breadcrumbSchema,
+    faqPageSchema,
+    webPageSchema,
+} from '../seo/schemas';
+import { extractFaqs, htmlWordCount, parseKeywords } from '../utils/seoUtils';
 
 /* Rich-text styles for article bodies. Plain CSS (no @apply) because this
    <style> tag is not processed by Tailwind. Colours come from the theme variables. */
@@ -129,7 +142,7 @@ function ShareBar({ title }) {
     };
 
     return (
-        <div className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-3 border-y border-line py-6">
+        <nav aria-label="Share this article" className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-3 border-y border-line py-6">
             <span className="eyebrow">Share</span>
             <ul className="flex list-none flex-wrap items-center gap-2.5">
                 {links.map((l) => (
@@ -140,13 +153,13 @@ function ShareBar({ title }) {
                     </li>
                 ))}
                 <li>
-                    <button type="button" className={iconBtn} onClick={copy} aria-label="Copy link" title="Copy link">
+                    <button type="button" className={iconBtn} onClick={copy} aria-label="Copy article link" title="Copy article link">
                         {copied ? <FaCheck /> : <FaLink />}
                     </button>
                 </li>
             </ul>
             <span role="status" className="text-[13px] font-semibold tracking-[.06em] text-gold">{copied ? 'Link copied' : ''}</span>
-        </div>
+        </nav>
     );
 }
 
@@ -161,18 +174,89 @@ export default function ArticleDetail() {
         [post]
     );
 
+    // SEO inputs derived from the (optional) fields stored with the article.
+    const savedFaqs = post?.faq;
+    const faqs = useMemo(
+        () => (Array.isArray(savedFaqs) && savedFaqs.length ? savedFaqs : extractFaqs(safeHtml)),
+        [safeHtml, savedFaqs]
+    );
+    const wordCount = useMemo(() => htmlWordCount(safeHtml), [safeHtml]);
+    const articlePath = `/article/${post?.slug || slug}/`;
+    const articleUrl = absoluteUrl(articlePath);
+    const keywords = useMemo(() => {
+        const saved = parseKeywords(post?.keywords);
+        if (saved.length) return saved;
+        return parseKeywords([
+            post?.focusedKeyword,
+            post?.tagName,
+            'Adv. Sanjay Achhra',
+            'Mumbai advocate',
+            ...DEFAULT_KEYWORDS.slice(0, 5),
+        ]);
+    }, [post]);
+
+    const publishedISO = post?.date ? `${post.date}T00:00:00+05:30` : undefined;
+    const modifiedISO = post?.updatedAt || publishedISO;
+
+    const articleLd = post
+        ? articleSchema({
+            path: articlePath,
+            url: articleUrl,
+            headline: post.title,
+            description: post.excerpt,
+            image: post.image || DEFAULT_IMAGE,
+            datePublished: post.date,
+            dateModified: post.updatedAt || post.date,
+            section: post.tagName,
+            keywords,
+            focusedKeyword: post.focusedKeyword,
+            wordCount,
+        })
+        : null;
+    const breadcrumbs = post
+        ? [
+            { name: 'Home', path: '/' },
+            { name: 'Articles', path: '/article/' },
+            { name: post.title, path: articlePath },
+        ]
+        : [];
+    const breadcrumbLd = post ? breadcrumbSchema(breadcrumbs) : null;
+    const faqLd = post ? faqPageSchema(faqs, articlePath) : null;
+    const webPageLd = post
+        ? webPageSchema({
+            path: articlePath,
+            name: post.title,
+            description: post.excerpt,
+            image: post.image || DEFAULT_IMAGE,
+            mainEntity: { '@type': 'Article', '@id': `${articleUrl}#article` },
+            breadcrumbs,
+            keywords,
+            datePublished: post.date,
+            dateModified: post.updatedAt || post.date,
+            speakable: true,
+        })
+        : null;
+
     useEffect(() => { window.scrollTo(0, 0); }, [slug]);
 
     if (!post && loading) {
-        return <section className="block-section wrap"><p className="text-muted">Loading article…</p></section>;
+        return (
+            <>
+                <MetaSEO title="Loading article" path={articlePath} noindex />
+                <section className="block-section wrap"><p className="text-muted">Loading article…</p></section>
+            </>
+        );
     }
 
     if (!post) {
         return (
-            <section className="block-section wrap">
-                <h1 className="text-5xl mb-4">Article not found</h1>
-                <Link to="/article/" className="text-gold font-semibold">Back to Articles</Link>
-            </section>
+            <>
+                <MetaSEO title="Article not found" path={articlePath} description="The requested article could not be found." noindex />
+                <section className="block-section wrap">
+                    <h1 className="text-5xl mb-4">Article not found</h1>
+                    <Link to="/article/" className="text-gold font-semibold">Back to Articles</Link>
+                </section>
+            </>
         );
     }
 
@@ -184,8 +268,24 @@ export default function ArticleDetail() {
         <>
             <style>{proseCss}</style>
 
+            <MetaSEO
+                title={post.title}
+                description={post.excerpt}
+                path={articlePath}
+                image={post.image || DEFAULT_IMAGE}
+                imageAlt={post.title}
+                type="article"
+                keywords={keywords}
+                focusedKeyword={post.focusedKeyword}
+                publishedTime={publishedISO}
+                modifiedTime={modifiedISO}
+                section={post.tagName}
+                jsonLd={[webPageLd, articleLd, breadcrumbLd, faqLd]}
+                customJsonLd={post.jsonLd}
+            />
+
             {/* Hero */}
-            <section className="page-hero relative overflow-hidden bg-navy text-white">
+            <header className="page-hero relative overflow-hidden bg-navy text-white">
                 <div className="relative z-[1] mx-auto w-full max-w-[860px] px-6 py-16 min-[901px]:py-20">
                     <Reveal variant="fade" className="eyebrow">
                         <Link to="/article/" className="text-inherit no-underline transition-colors hover:text-gold-soft">Articles</Link> · {post.tagName}
@@ -193,7 +293,8 @@ export default function ArticleDetail() {
                     <Reveal as="h1" delay={0.1} className="mt-4 text-[clamp(34px,5vw,58px)] leading-[1.1] text-white">{post.title}</Reveal>
                     <Reveal delay={0.25} className="mt-8 flex items-center gap-4">
                         <img
-                            src={images.portrait} alt="" width="56" height="56"
+                            src={images.portrait} alt={`${author.name}, author of this article`} width="56" height="56"
+                            loading="lazy" decoding="async"
                             className="size-14 shrink-0 rounded-full border border-gold bg-white object-cover object-top"
                         />
                         <div>
@@ -202,7 +303,7 @@ export default function ArticleDetail() {
                         </div>
                     </Reveal>
                 </div>
-            </section>
+            </header>
 
             {/* Body */}
             <div className="mx-auto w-full max-w-[860px] px-6 pt-14 pb-20">
@@ -224,21 +325,22 @@ export default function ArticleDetail() {
                 )}
 
                 {/* Author */}
-                <div className="mt-10 flex flex-col items-center gap-6 bg-navy p-8 text-center min-[701px]:flex-row min-[701px]:text-left">
+                <aside aria-label="About the author" className="mt-10 flex flex-col items-center gap-6 bg-navy p-8 text-center min-[701px]:flex-row min-[701px]:text-left">
                     <img
-                        src={images.portrait} alt={author.name} width="120" height="120"
+                        src={images.portrait} alt={`Portrait of ${author.name}`} width="120" height="120"
+                        loading="lazy" decoding="async"
                         className="size-[120px] shrink-0 rounded-full border border-gold bg-white object-cover object-top p-1"
                     />
                     <div>
                         <div className="font-serif text-[30px] font-semibold leading-tight text-gold">{author.name}</div>
                         <p className="mt-2 text-[15px] leading-[1.6] text-[#c8d5da]">{author.bio}</p>
                     </div>
-                </div>
+                </aside>
             </div>
 
             {/* Read more */}
             {more.length > 0 && (
-                <section className="block-section bg-cream">
+                <section aria-label="More articles" className="block-section bg-cream">
                     <div className="wrap">
                         <div className="mb-[50px] flex flex-wrap items-end justify-between gap-10">
                             <div>

@@ -10,7 +10,7 @@ export default function PageHero({ crumbs, title, sub }) {
                     {crumbs.map((c, i) => (
                         <span key={c.label}>
                             {i > 0 && ' / '}
-                            {c.to ? <Link to={c.to} className="text-gold no-underline">{c.label}</Link> : <span>{c.label}</span>}
+                            {c.to ? <Link to={c.to} className="text-gold no-underline">{c.label}</Link> : <span aria-current="page">{c.label}</span>}
                         </span>
                     ))}
                 </Reveal>

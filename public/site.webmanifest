@@ -1,0 +1,24 @@
+{
+  "name": "Sanjay Achhra Law Chambers",
+  "short_name": "Sanjay Achhra",
+  "description": "Adv. Sanjay Achhra, Advocate, High Court, Mumbai. Information on direct-tax litigation, PMLA, GST, cyber law and allied matters.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#faf6ee",
+  "theme_color": "#0c2c3b",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "16x16 32x32 48x48"
+    }
+  ]
+}

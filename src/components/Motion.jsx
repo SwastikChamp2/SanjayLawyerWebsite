@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- shared motion helpers live with the components */
 import { Fragment, useEffect, useRef } from 'react';
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
 
@@ -35,9 +36,8 @@ export function RevealText({ as: Tag = 'div', children, className = '', wordClas
     const text = String(children);
     const words = text.split(' ');
     return (
-        <Tag className={className} aria-label={text}>
+        <Tag className={className}>
             <motion.span
-                aria-hidden="true"
                 className="inline"
                 initial="hidden"
                 whileInView="show"

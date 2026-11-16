@@ -1,5 +1,6 @@
 // src/components/RichTextEditor/RichTextEditor.jsx
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+/* eslint-disable react-hooks/set-state-in-effect -- counters mirror the external Jodit editor */
+import { useRef, useState, useEffect, useMemo } from 'react';
 import JoditEditor from 'jodit-react';
 
 const RichTextEditor = ({ value, onChange, placeholder = '', maxLength = 2000, maxImageSizeInMB = 3.50 }) => {
@@ -270,7 +271,7 @@ const RichTextEditor = ({ value, onChange, placeholder = '', maxLength = 2000, m
             },
 
             // Prevent focus loss on blur during dialog operations
-            beforeDestruct: (editor) => {
+            beforeDestruct: () => {
                 console.log('Editor being destructed');
             }
         }
@@ -353,19 +354,6 @@ const RichTextEditor = ({ value, onChange, placeholder = '', maxLength = 2000, m
     const handleEditorBlur = (newContent) => {
         console.log('Editor onBlur called with content length:', newContent?.length || 0);
         // Counter updates are now handled in onChange for real-time feedback
-        onChange(newContent);
-    };
-
-    const handleEditorChange = (newContent) => {
-        console.log('Editor onChange called with content length:', newContent?.length || 0);
-
-        // Update counters in real-time
-        const charCount = countCharacters(newContent || '');
-        const imgSize = calculateImageSizes(newContent || '');
-
-        setCharacterCount(charCount);
-        setImageSize(imgSize);
-
         onChange(newContent);
     };
 

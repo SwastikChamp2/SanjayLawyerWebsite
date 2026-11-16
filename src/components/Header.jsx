@@ -8,14 +8,21 @@ const linkClass =
     "relative text-sm tracking-[.06em] text-[#dfe7ea] no-underline after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-gold after:transition-all after:duration-500 hover:text-white hover:after:w-full";
 
 export default function Header() {
-    const { key } = useLocation();
+    const { key, pathname } = useLocation();
     const [open, setOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const { scrollY, scrollYProgress } = useScroll();
     const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
 
     useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 40));
+    // Close the mobile menu whenever the route changes.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     useEffect(() => { setOpen(false); }, [key]);
+
+    const isCurrent = (to) => {
+        const base = to.split('#')[0];
+        return base === '/' ? pathname === '/' : pathname.startsWith(base);
+    };
 
     return (
         <>
@@ -38,9 +45,10 @@ export default function Header() {
                     <Link to="/" className="group flex items-center gap-3.5 no-underline">
                         <img
                             src={images.monogram}
-                            alt="SA monogram"
+                            alt="Sanjay Achhra Law Chambers monogram"
                             width="46"
                             height="46"
+                            decoding="async"
                             className={`transition-all duration-700 group-hover:rotate-[8deg] ${scrolled ? 'size-10' : 'size-[46px]'}`}
                         />
                         <span>
@@ -50,7 +58,7 @@ export default function Header() {
                     </Link>
 
                     <nav aria-label="Main" className="hidden min-[901px]:flex gap-[34px]">
-                        {nav.map((n) => <Link key={n.label} to={n.to} className={linkClass}>{n.label}</Link>)}
+                        {nav.map((n) => <Link key={n.label} to={n.to} aria-current={isCurrent(n.to) ? 'page' : undefined} className={linkClass}>{n.label}</Link>)}
                     </nav>
 
                     <button
@@ -79,7 +87,7 @@ export default function Header() {
                             <div className="flex flex-col px-6 pt-2 pb-5">
                                 {nav.map((n, i) => (
                                     <motion.div key={n.label} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 + i * 0.06, duration: 0.5, ease }}>
-                                        <Link to={n.to} className="block border-b border-white/10 py-3.5 text-sm tracking-[.06em] text-[#dfe7ea] no-underline">{n.label}</Link>
+                                        <Link to={n.to} aria-current={isCurrent(n.to) ? 'page' : undefined} className="block border-b border-white/10 py-3.5 text-sm tracking-[.06em] text-[#dfe7ea] no-underline">{n.label}</Link>
                                     </motion.div>
                                 ))}
                             </div>

@@ -17,7 +17,7 @@ const Item = ({ icon, label, delay, children }) => (
 export default function Contact() {
     const link = 'text-white no-underline text-[17px]';
     return (
-        <section className="block-section bg-navy text-[#d8e1e4]" id="contact">
+        <section className="block-section bg-navy text-[#d8e1e4]" id="contact" aria-label="Contact the Chambers">
             <div className="wrap">
                 <Reveal variant="fade" className="eyebrow">Contact</Reveal>
                 <RevealText as="h2" className="h2 !text-white" delay={0.1}>Chambers</RevealText>

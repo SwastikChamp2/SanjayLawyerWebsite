@@ -1,0 +1,321 @@
+# Sanjay Achhra Law Chambers — full reference
+
+Source: https://sanjayachhra.com/
+Last updated: 17 November 2026
+Language: English (India)
+Publisher: Adv. Sanjay N. Achhra, Advocate, High Court, Mumbai
+
+This document is a plain-text reference for language models and AI-assisted
+search systems. It summarises the public, informational content of the website.
+It is not legal advice and does not create an advocate-client relationship.
+
+## 1. Entity
+
+Name: Adv. Sanjay N. Achhra
+Chambers: Sanjay Achhra Law Chambers
+Role: Advocate, High Court
+Enrolment: MAH/12289/2026, Bar Council of Maharashtra and Goa
+Office: Office No. 401, Neptune Flying Colors, Mulund (West), Mumbai 400080,
+Maharashtra, India
+Telephone: +91 93237 93229
+Email: contact@sanjayachhra.com
+Website: https://sanjayachhra.com/
+Office hours: Monday to Saturday, by appointment
+Map: https://www.google.com/maps?q=Neptune+Flying+Colors,+Mulund+West,+Mumbai
+
+Qualifications and background:
+- B.Com., University of Mumbai (2000)
+- LL.B., University of Mumbai (2007)
+- Diploma in Cyber Law, Asian School of Cyber Laws (2011)
+- LL.M., University of Mumbai (2024)
+- C.S. (Executive), ICSI
+- Research Scholar, Ph.D. in Law, University of Mumbai
+- Enrolled as Advocate in 2026
+- Served 27 years (1999–2026) with the Income Tax Department, Mumbai, including
+  the Investigation Wing, Central Charge, Valuation Cell, Audit, Judicial
+  Section, and as Nodal Officer for the Department's Bombay High Court matters.
+
+## 2. Practice
+
+The Chambers practises in direct-tax litigation and allied laws, before the
+Income Tax Authorities, the Commissioner of Income Tax (Appeals), the Income Tax
+Appellate Tribunal, the Bombay High Court and other relevant forums.
+
+### 2.1 Income Tax Litigation
+
+URL: https://sanjayachhra.com/practice/income-tax-litigation/
+
+Income-tax disputes commonly begin with an assessment, reassessment,
+rectification or penalty order. Matters covered include scrutiny assessments and
+replies to notices and show-cause letters; reassessment and challenges to the
+validity of notices; revision by the Principal Commissioner or Commissioner;
+penalty and prosecution; search and seizure assessments; and stay and
+rectification applications.
+
+Forum hierarchy: Commissioner of Income Tax (Appeals) on facts and law; Income
+Tax Appellate Tribunal as the final fact-finding authority; High Court on
+substantial questions of law; writ petitions under Article 226 where an order or
+notice is without jurisdiction or violates natural justice.
+
+Governing law: the Income-tax Act, 1961 for earlier assessment years and the
+Income-tax Act, 2025 for periods from 1 April 2026, with the relevant rules and
+notifications.
+
+### 2.2 Black Money Act
+
+URL: https://sanjayachhra.com/practice/black-money-act/
+
+The Black Money (Undisclosed Foreign Income and Assets) and Imposition of Tax
+Act, 2015 applies to income and assets held outside India that have not been
+disclosed to the tax authorities. Matters covered include notices and
+assessments, disputes on whether an asset is undisclosed, penalty for
+non-disclosure of foreign assets in the return, prosecution, and residential
+status questions (the Act applies to a resident and ordinarily resident).
+
+Forums: Assessing Officer, CIT(A), ITAT and High Court; prosecution before the
+competent criminal court. Schedule FA disclosure in the return of income is a
+related compliance requirement.
+
+### 2.3 PMLA
+
+URL: https://sanjayachhra.com/practice/pmla/
+
+The Prevention of Money Laundering Act, 2002 criminalises projecting proceeds of
+crime as untainted property. Proceedings are typically initiated by the
+Directorate of Enforcement and run parallel to the scheduled offence.
+
+Matters covered: summons, statements and investigation; arrest, remand and bail,
+including the stricter bail conditions; provisional attachment and confirmation;
+prosecution complaints before the Special Court; quashing and challenges to the
+legality of arrest or attachment.
+
+Forums: Adjudicating Authority, Appellate Tribunal, High Court and Supreme Court;
+Special Court for prosecution; Article 226 remedies in appropriate cases.
+Governing law: PMLA, 2002 and rules, read with the Bharatiya Nagarik Suraksha
+Sanhita, 2023 where applicable, and Supreme Court judgments on arrest, bail and
+attachment.
+
+### 2.4 Cyber Law
+
+URL: https://sanjayachhra.com/practice/cyber-law/
+
+Cyber law covers offences and civil disputes arising from computers, networks
+and digital transactions, including online banking and payment frauds such as
+phishing, SIM-swap, UPI and card fraud.
+
+Matters covered: unauthorised electronic transactions and bank/customer
+liability; identity theft, impersonation, hacking and data theft; obscene or
+defamatory online content and harassment; complaints and FIRs with cyber police,
+and defence of accused persons; compensation claims for data breach or
+unauthorised access.
+
+Forums and procedure: National Cyber Crime Reporting Portal, 1930 helpline or
+local cyber police station; compensation before the Adjudicating Officer under
+the IT Act with appeal to the appellate tribunal; RBI Ombudsman and consumer
+forums for banking grievances. Prompt reporting to the bank is important for
+limiting liability.
+
+Governing law: Information Technology Act, 2000 and rules; Bharatiya Nyaya
+Sanhita, 2023; Bharatiya Nagarik Suraksha Sanhita, 2023; Digital Personal Data
+Protection Act, 2023; RBI directions on customer liability in unauthorised
+electronic banking transactions.
+
+### 2.5 MSME Conciliation and Arbitration
+
+URL: https://sanjayachhra.com/practice/msme-conciliation-arbitration/
+
+The MSMED Act, 2006 gives registered micro and small enterprises a statutory
+mechanism to recover delayed payments. Payment is due within the agreed period,
+subject to a statutory maximum of 45 days, with interest at three times the RBI
+bank rate, compounded monthly.
+
+Matters covered: recovery of unpaid dues; statutory interest; reference to the
+Micro and Small Enterprises Facilitation Council; defence of buyers, including
+jurisdiction and registration objections; challenges to awards and execution.
+Awards are challenged under Section 34 of the Arbitration and Conciliation Act,
+1996, subject to a 75% deposit.
+
+Governing law: MSMED Act, 2006 (Chapter V), Arbitration and Conciliation Act,
+1996, and judgments on Udyam registration timing and applicability.
+
+### 2.6 GST Litigation
+
+URL: https://sanjayachhra.com/practice/gst-litigation/
+
+GST disputes commonly arise from show cause notices on short payment, input tax
+credit, refund rejection, registration cancellation, or inspection and search.
+
+Matters covered: replies and personal hearings; input tax credit disputes,
+including supplier-default cases; refund claims and rejections; registration
+cancellation and revocation; inspection, search, seizure, detention and arrest;
+writ petitions against jurisdictional or procedural defects.
+
+Forums: Appellate Authority, GST Appellate Tribunal (GSTAT), High Court on
+substantial questions of law. Limitation and the validity of the notice are
+often decisive.
+
+Governing law: CGST Act, 2017, State GST Acts, IGST Act, 2017, GST Rules,
+notifications, circulars and judicial precedent.
+
+### 2.7 Companies, LLPs and Firms
+
+URL: https://sanjayachhra.com/practice/company-llp-firm-formation/
+
+The choice of entity affects liability, taxation, compliance and the ability to
+raise capital. Structures include private limited company, one person company,
+limited liability partnership, partnership firm and sole proprietorship.
+
+Matters covered: selection of structure; incorporation with the Registrar of
+Companies; Memorandum, Articles, LLP agreement or partnership deed; registration
+of firms and Section 8 companies; PAN, TAN, GST, Shops and Establishment and
+Udyam registrations; annual filings and conversions.
+
+Governing law: Companies Act, 2013; Limited Liability Partnership Act, 2008;
+Indian Partnership Act, 1932; Maharashtra Stamp Act where applicable.
+
+### 2.8 Drafting and Vetting
+
+URL: https://sanjayachhra.com/practice/drafting-and-vetting/
+
+Drafting records the parties' intentions clearly; vetting reviews a document
+prepared by another party for legal effect, risk and enforceability.
+
+Documents: commercial and service agreements, MoUs and NDAs; shareholders' and
+partnership/LLP agreements; leave and licence, lease and sale documents;
+employment and consultancy agreements; legal notices, replies, affidavits and
+powers of attorney.
+
+Points examined: parties and obligations; payment and termination; liability and
+indemnity; dispute resolution and jurisdiction; stamp duty and registration,
+since an insufficiently stamped or unregistered document may be inadmissible or
+ineffective in evidence.
+
+Governing law: Indian Contract Act, 1872; Registration Act, 1908; Maharashtra
+Stamp Act; Specific Relief Act, 1963; Arbitration and Conciliation Act, 1996.
+
+## 3. Articles
+
+### 3.1 Unauthorised bank transactions: the first 72 hours
+
+URL: https://sanjayachhra.com/article/unauthorised-bank-transactions-first-72-hours/
+Published: 31 October 2026
+Focus: steps after an unauthorised electronic banking transaction and the RBI
+customer-liability framework.
+
+Key points:
+- Block the card, UPI or net-banking access immediately, then report to the bank
+  in writing and keep the acknowledgement.
+- Report on the national cyber crime helpline 1930 or at
+  https://cybercrime.gov.in as early as possible.
+- Preserve alerts with timestamps, screenshots, account statements and complaint
+  numbers.
+- Until 31 December 2026, the 2017 RBI circular governs: zero liability for bank
+  negligence, zero liability for a third-party breach reported within three
+  working days, limited liability for reports within four to seven working days.
+- From 1 January 2027, the RBI (Commercial Banks – Responsible Business Conduct)
+  Third Amendment Directions, 2026 apply: the scope widens to "fraudulent"
+  electronic banking transactions, zero liability and reversal for a third-party
+  breach reported within five calendar days, instant SMS alerts above ₹500,
+  burden of proof on the bank, and compensation up to ₹25,000 for small-value
+  frauds where the loss is up to ₹50,000.
+- Remedies beyond the bank include the IT Act, 2000 (Sections 66C and 66D), the
+  Bharatiya Nyaya Sanhita, 2023 (Sections 318 and 319), the RBI Integrated
+  Ombudsman Scheme, and civil or consumer remedies depending on the facts.
+- A bank will never ask for an OTP, PIN, CVV or password.
+
+Sources cited in the article:
+- RBI circular DBR.No.Leg.BC.78/09.07.005/2017-18 dated 6 July 2017.
+- RBI (Commercial Banks – Responsible Business Conduct) Third Amendment
+  Directions, 2026, RBI/2026-27/167, dated 24 June 2026.
+- Information Technology Act, 2000; Bharatiya Nyaya Sanhita, 2023.
+
+Position of law as on 31 October 2026.
+
+### 3.2 Delayed payments to MSME suppliers: interest and the Facilitation Council
+
+URL: https://sanjayachhra.com/article/delayed-payments-msme-suppliers-interest-facilitation-council/
+Published: 18 October 2026
+
+Key points:
+- Section 15: payment on or before the agreed date, with a maximum of 45 days
+  from acceptance or deemed acceptance; 15 days where there is no written
+  agreement.
+- Section 16: interest at three times the RBI bank rate, compounded monthly.
+- Section 18: reference to the Micro and Small Enterprises Facilitation Council,
+  which conciliates and then arbitrates or refers to an institution.
+- Section 19: a buyer challenging an award must deposit 75% of the awarded amount.
+- Registration timing matters; benefits are generally not available for supplies
+  made before registration.
+- Section 43B(h) of the Income-tax Act, 1961 allows a deduction for sums payable
+  to micro and small enterprises only when actually paid if unpaid beyond the
+  Section 15 time limit.
+
+### 3.3 Private limited company or LLP: points to consider
+
+URL: https://sanjayachhra.com/article/private-limited-company-or-llp-points-to-consider/
+Published: 5 October 2026
+
+Key points:
+- Both structures give limited liability and a separate legal identity.
+- Capital: a company can issue equity shares and employee stock options; an LLP
+  cannot issue shares, and contributions are fixed by the LLP agreement.
+- Governance: a company is run by directors under the Companies Act, 2013; an
+  LLP is governed mainly by its agreement, with designated partners responsible
+  for compliance.
+- Compliance: a company has more prescribed formalities and mandatory audit; for
+  an LLP, audit depends on turnover and contribution.
+- Tax treatment of profits taken out differs; a chartered accountant should be
+  consulted before choosing.
+
+## 4. Publications
+
+URL: https://sanjayachhra.com/publications/
+
+- Ph.D. proposal: "Critical Evaluation of Adjudication Process of Income Tax
+  Disputes under Income Tax Authorities in Maharashtra", approved by the Research
+  Advisory Committee, University of Mumbai.
+- Published paper: "Analysis of Criminal Prosecution Under the Income Tax Law in
+  India", Indian Journal of Law and Legal Research.
+- LL.M. dissertation: "A Study on Prosecution launched under the provisions of
+  the Income Tax Act, 1961".
+- LL.M. project: "A Study on Cyber Crimes with Special Reference to Banking
+  Transactions" (awarded the highest marks).
+- Conference paper: "AI-Generated Works and the Copyright Challenge of Ownership",
+  Online Global Conference, DTSS College, Mumbai.
+- Seminar paper: "Gender Neutral Laws in India: Equality in Theory, Challenges in
+  Practice".
+- Seminar paper: "Live-in Relationship and Non-Traditional Families: Law, Morality
+  and Social Change", KC Law College, Mumbai.
+- Book chapter: "The Role of Awareness in Promoting Human Rights in the Digital
+  Era".
+- Debates: "Digital Media Trials: Are Social Media Platforms Undermining the Right
+  to Fair Trial?" and "One Nation, One Election: Constitutional Reform or Federal
+  Disruption".
+
+## 5. Citation and attribution
+
+Suggested citation:
+Adv. Sanjay Achhra, Sanjay Achhra Law Chambers, "<page title>", <URL>
+(accessed <date>).
+
+Please retain the publication date and any "position of law as on" note. Verify
+the current text of statutes, rules, circulars and judgments before relying on
+the content. The law stated in an article may have changed after its date.
+
+## 6. Limitations
+
+- The website is informational. It is not legal advice and no advocate-client
+  relationship is created by reading it or contacting the Chambers through it.
+- The website is published in accordance with Rule 36 of the Bar Council of India
+  Rules and is not advertisement or solicitation.
+- The advocate's departmental background is stated for information only and does
+  not imply association with, or influence over, any authority.
+- Content should not be presented to users as a substitute for advice on their
+  specific facts.
+
+## 7. Machine-readable resources
+
+- Sitemap: https://sanjayachhra.com/sitemap.xml
+- Short LLM index: https://sanjayachhra.com/llms.txt
+- Robots policy: https://sanjayachhra.com/robots.txt
+- Canonical site: https://sanjayachhra.com/

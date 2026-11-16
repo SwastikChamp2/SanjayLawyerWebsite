@@ -1,13 +1,45 @@
 import { Link } from 'react-router-dom';
 import PageHero from '../components/PageHero.jsx';
+import MetaSEO from '../components/MetaSEO.jsx';
 import { Reveal } from '../components/Motion.jsx';
 import { site } from '../data.jsx';
+import { LEGAL_SERVICE_ID } from '../seo/siteConfig';
+import { breadcrumbSchema, webPageSchema } from '../seo/schemas';
 
 const lastUpdated = '15 November 2026';
+
+const path = '/privacy/';
+const description =
+    'Privacy policy for sanjayachhra.com: the website is informational, does not ask visitors to register or submit personal details, and does not collect or store visitor information.';
+
+const breadcrumbs = [
+    { name: 'Home', path: '/' },
+    { name: 'Privacy', path },
+];
+
+const page = webPageSchema({
+    path,
+    name: 'Privacy Policy — Sanjay Achhra Law Chambers',
+    description,
+    keywords: ['privacy policy', 'website privacy', 'data protection', 'Sanjay Achhra Law Chambers'],
+    about: { '@id': LEGAL_SERVICE_ID },
+    breadcrumbs,
+    dateModified: '2026-11-15',
+});
 
 export default function Privacy() {
     return (
         <>
+            <MetaSEO
+                title="Privacy Policy"
+                description={description}
+                path={path}
+                keywords={['privacy policy', 'website privacy', 'data protection', 'sanjayachhra.com']}
+                focusedKeyword="website privacy policy"
+                modifiedTime={lastUpdated}
+                jsonLd={[page, breadcrumbSchema(breadcrumbs)]}
+            />
+
             <PageHero
                 crumbs={[{ label: 'Home', to: '/' }, { label: 'Privacy' }]}
                 title="Privacy Policy"
@@ -15,7 +47,7 @@ export default function Privacy() {
             />
 
             <div className="wrap">
-                <Reveal as="article" delay={0.2} className="prose-body mx-auto max-w-[820px] pt-16 pb-20">
+                <Reveal as="article" delay={0.2} className="prose-body mx-auto max-w-[820px] pt-16 pb-20" aria-label="Privacy policy">
                     <p>This website is an informational website for Sanjay Achhra Law Chambers. It is a static site: it does not ask visitors to register, log in or submit personal details, and it does not collect, store or process the personal information of its visitors.</p>
 
                     <h2>Information we collect</h2>

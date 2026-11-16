@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { deleteDoc, doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
@@ -6,10 +6,12 @@ import PageHero from '../components/PageHero.jsx';
 import AdminLogin from '../components/AdminLogin.jsx';
 import CropperModal from '../components/CropperModal.jsx';
 import RichTextEditor from '../components/RichTextEditor.jsx';
+import MetaSEO from '../components/MetaSEO.jsx';
 import { isAdmin, logoutAdmin } from '../admin/adminAuth';
 import { invalidateArticles } from '../hooks/useArticles';
+import { validateJsonLd } from '../utils/seoUtils';
 import {
-    byteSize, generateUniqueSlug, processRichTextImages, sanitizeTitle,
+    byteSize, processRichTextImages, sanitizeTitle,
     textLength, todayISO, uploadImage, collectCloudinaryUrls, deleteCloudinaryImages,
 } from '../utils/articleUtils';
 
@@ -34,11 +36,23 @@ export default function AddArticle() {
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState(null); // { type: 'error' | 'success', text }
 
-    const [form, setForm] = useState({ title: '', tagName: '', date: todayISO(), excerpt: '', bodyHtml: '' });
+    const [form, setForm] = useState({
+        title: '',
+        tagName: '',
+        date: todayISO(),
+        excerpt: '',
+        bodyHtml: '',
+        // Optional SEO fields, stored with the article in Firestore.
+        focusedKeyword: '',
+        keywords: '',
+        jsonLd: '',
+    });
 
     const [articleSlug, setArticleSlug] = useState('');
 
     const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+
+    const jsonLdCheck = useMemo(() => validateJsonLd(form.jsonLd), [form.jsonLd]);
 
     const onTitleChange = (e) => {
         const title = e.target.value;
@@ -73,6 +87,9 @@ export default function AddArticle() {
                     date: d.date || todayISO(),
                     excerpt: d.excerpt || '',
                     bodyHtml: d.bodyHtml || '',
+                    focusedKeyword: d.focusedKeyword || '',
+                    keywords: d.keywords || '',
+                    jsonLd: d.jsonLd || '',
                 });
                 setExistingImage(d.image || '');
             } catch (err) {
@@ -127,6 +144,9 @@ export default function AddArticle() {
         if (!form.excerpt.trim()) return 'Excerpt is required.';
         if (!form.bodyHtml.trim() || textLength(form.bodyHtml) === 0) return 'Article body is required.';
         if (textLength(form.bodyHtml) > MAX_CHARS) return `Body exceeds ${MAX_CHARS} characters.`;
+        if (form.focusedKeyword.length > 120) return 'Focus keyword must be 120 characters or fewer.';
+        if (form.keywords.length > 600) return 'Keywords must be 600 characters or fewer.';
+        if (!jsonLdCheck.ok) return `JSON-LD: ${jsonLdCheck.error}`;
         if (coverMode === 'url' && coverUrl && !/^https?:\/\/.+/i.test(coverUrl)) return 'Cover image URL must start with http:// or https://';
         return null;
     };
@@ -158,6 +178,11 @@ export default function AddArticle() {
                 tag: sanitizeTitle(form.tagName),
                 date: form.date,
                 isActive: true,
+                // Optional SEO metadata. Empty strings are harmless and let an
+                // editor clear a previously saved value.
+                focusedKeyword: form.focusedKeyword.trim(),
+                keywords: form.keywords.trim(),
+                jsonLd: form.jsonLd.trim(),
                 updatedAt: serverTimestamp(),
             };
 
@@ -220,6 +245,7 @@ export default function AddArticle() {
     if (!authed) {
         return (
             <>
+                <MetaSEO title="Admin sign in" path={isEdit ? `/edit-article/${editSlug}/` : '/add-article/'} noindex />
                 <PageHero {...heroProps} />
                 <section className="block-section paper">
                     <div className="wrap"><AdminLogin onSuccess={() => setAuthed(true)} /></div>
@@ -229,21 +255,30 @@ export default function AddArticle() {
     }
 
     if (isEdit && loadingDoc) {
-        return <section className="block-section wrap"><p className="text-muted">Loading article…</p></section>;
+        return (
+            <>
+                <MetaSEO title="Loading article" path={`/edit-article/${editSlug}/`} noindex />
+                <section className="block-section wrap"><p className="text-muted">Loading article…</p></section>
+            </>
+        );
     }
 
     if (isEdit && notFound) {
         return (
-            <section className="block-section wrap">
-                <h1 className="mb-4 text-5xl">Article not found</h1>
-                <p className="mb-4 text-muted">Only articles added through this page can be edited here.</p>
-                <Link to="/article/" className="font-semibold text-gold">Back to Articles</Link>
-            </section>
+            <>
+                <MetaSEO title="Article not found" path={`/edit-article/${editSlug}/`} noindex />
+                <section className="block-section wrap">
+                    <h1 className="mb-4 text-5xl">Article not found</h1>
+                    <p className="mb-4 text-muted">Only articles added through this page can be edited here.</p>
+                    <Link to="/article/" className="font-semibold text-gold">Back to Articles</Link>
+                </section>
+            </>
         );
     }
 
     return (
         <>
+            <MetaSEO title={isEdit ? 'Edit article' : 'Add article'} path={isEdit ? `/edit-article/${editSlug}/` : '/add-article/'} noindex />
             <PageHero {...heroProps} />
             <section className="block-section paper">
                 <div className="mx-auto w-full max-w-[920px] px-6">
@@ -358,6 +393,70 @@ export default function AddArticle() {
                             <textarea id="a-excerpt" rows={3} className={input} maxLength={MAX_EXCERPT} value={form.excerpt} onChange={set('excerpt')} placeholder="Short summary shown on the article card" />
                             <p className="mt-1 text-xs text-muted">{form.excerpt.length}/{MAX_EXCERPT}</p>
                         </div>
+
+                        {/* Optional per-article SEO and structured data */}
+                        <fieldset className="border border-line bg-paper/60 p-5">
+                            <legend className="px-2 text-sm font-semibold text-navy">
+                                SEO &amp; structured data <span className="font-normal text-muted">(optional)</span>
+                            </legend>
+                            <p className="mb-4 text-xs leading-relaxed text-muted">
+                                These fields create unique meta tags and JSON-LD for this article. If left blank, the
+                                title, excerpt and category are used automatically.
+                            </p>
+
+                            <div className="grid gap-4 min-[701px]:grid-cols-2">
+                                <div>
+                                    <label className={label} htmlFor="a-focus-keyword">Focus keyword</label>
+                                    <input
+                                        id="a-focus-keyword"
+                                        className={input}
+                                        maxLength={120}
+                                        value={form.focusedKeyword}
+                                        onChange={set('focusedKeyword')}
+                                        placeholder="e.g. unauthorised bank transaction complaint"
+                                    />
+                                    <p className="mt-1 text-xs text-muted">{form.focusedKeyword.length}/120</p>
+                                </div>
+                                <div>
+                                    <label className={label} htmlFor="a-keywords">Keywords</label>
+                                    <input
+                                        id="a-keywords"
+                                        className={input}
+                                        maxLength={600}
+                                        value={form.keywords}
+                                        onChange={set('keywords')}
+                                        placeholder="bank fraud lawyer, RBI ombudsman, cyber crime"
+                                    />
+                                    <p className="mt-1 text-xs text-muted">{form.keywords.length}/600 · separate with commas</p>
+                                </div>
+                            </div>
+
+                            <div className="mt-4">
+                                <label className={label} htmlFor="a-jsonld">Custom JSON-LD</label>
+                                <textarea
+                                    id="a-jsonld"
+                                    rows={9}
+                                    spellCheck={false}
+                                    className={`${input} font-mono text-[13px] leading-relaxed`}
+                                    maxLength={60000}
+                                    value={form.jsonLd}
+                                    onChange={set('jsonLd')}
+                                    placeholder={'{\n  "@context": "https://schema.org",\n  "@type": "Article",\n  "headline": "…"\n}'}
+                                />
+                                <p className="mt-1 text-xs leading-relaxed text-muted">
+                                    Paste a complete JSON-LD object, array or <code>@graph</code>. It is validated and
+                                    added alongside the Article and Breadcrumb markup generated from the fields above.
+                                </p>
+                                {form.jsonLd.trim() && (
+                                    <p
+                                        role={jsonLdCheck.ok ? 'status' : 'alert'}
+                                        className={`mt-1 text-xs font-semibold ${jsonLdCheck.ok ? 'text-green-700' : 'text-[#a4453a]'}`}
+                                    >
+                                        {jsonLdCheck.ok ? 'Valid JSON-LD.' : jsonLdCheck.error}
+                                    </p>
+                                )}
+                            </div>
+                        </fieldset>
 
                         {/* Body */}
                         <div>

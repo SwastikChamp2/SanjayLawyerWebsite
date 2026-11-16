@@ -1,9 +1,13 @@
+import sanjayPortrait from './assets/images/sanjay.webp';
+import monogram from './assets/images/monogram.svg';
+
+
 // Site-wide settings (were Ghost @custom.* values) — edit these.
 export const site = {
     enrolment: 'MAH/12289/2026',
     phone: '+91 93237 93229',
     email: 'contact@sanjayachhra.com',
-    officeAddress: 'Neptune Flying Colors, Mulund (W), Mumbai',
+    officeAddress: 'Office No 401,Neptune Flying Colors, Mulund (W), Mumbai',
     showPreviewRibbon: false,
 };
 
@@ -23,8 +27,8 @@ export const footerNav = [
 ];
 
 export const images = {
-    portrait: 'https://sanjay.178-105-212-85.sslip.io/assets/images/sanjay.webp',
-    monogram: 'https://sanjay.178-105-212-85.sslip.io/assets/images/monogram.svg',
+    portrait: sanjayPortrait,
+    monogram: monogram,
 };
 
 const svg = (children) => (
@@ -238,6 +242,22 @@ export const posts = [
         date: '2026-10-31',
         tag: 'cyber-law',
         tagName: 'Cyber Law',
+        focusedKeyword: 'unauthorised bank transaction complaint',
+        keywords: 'unauthorised bank transaction, RBI customer liability, cyber crime 1930, online banking fraud complaint, zero liability, fraudulent electronic banking transaction',
+        faq: [
+            {
+                question: 'Do I lose my rights after three days?',
+                answer: 'No. A later report is not automatically barred. What changes is the level of protection: prompt reporting can mean zero liability, while a later report is dealt with under the framework and the bank’s policy.',
+            },
+            {
+                question: 'What if I shared the OTP myself?',
+                answer: 'Cases of customer negligence are treated differently, and the customer may bear the loss up to the point of reporting. Reporting promptly still matters, because losses after the report are the bank’s. The 2026 Directions also define negligence and place the burden of proving it on the bank.',
+            },
+            {
+                question: 'Can I go straight to the Ombudsman?',
+                answer: 'Generally, the bank must be approached first. The Ombudsman route opens if the bank does not reply within 30 days or the reply is not satisfactory.',
+            },
+        ],
         image: null,
         body: (
             <>
@@ -438,6 +458,8 @@ Yours faithfully,
         date: '2026-10-18',
         tag: 'msme-conciliation-arbitration',
         tagName: 'MSME',
+        focusedKeyword: 'MSME delayed payment interest',
+        keywords: 'MSMED Act 2006, MSME Facilitation Council, Section 43B(h), delayed payment interest, micro and small enterprises, MSEFC arbitration',
         image: null,
         body: (
             <>
@@ -466,6 +488,8 @@ Yours faithfully,
         date: '2026-10-05',
         tag: 'company-llp-firm-formation',
         tagName: 'Companies & LLPs',
+        focusedKeyword: 'private limited company or LLP',
+        keywords: 'private limited company vs LLP, LLP registration, company incorporation Mumbai, limited liability, corporate compliance, business structure India',
         image: null,
         body: (
             <>
